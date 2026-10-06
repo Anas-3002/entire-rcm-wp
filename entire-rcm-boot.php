@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'ER_RCM_VERSION', '1.6.0' );
+define( 'ER_RCM_VERSION', '1.7.0' );
 define( 'ER_RCM_DIR', __DIR__ . '/entire-rcm' );
 define( 'ER_RCM_URL', plugins_url( 'entire-rcm', __FILE__ ) );
 
@@ -41,6 +41,14 @@ add_action( 'wp_head', function () {
 	echo '<link rel="preconnect" href="https://fonts.googleapis.com">' . "\n";
 	echo '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>' . "\n";
 	echo '<meta name="theme-color" content="#122056">' . "\n";
+}, 1 );
+
+/**
+ * The theme's skip link points at #content; the landing page owns its own
+ * markup, so provide the anchor.
+ */
+add_action( 'wp_body_open', function () {
+	echo '<span id="content" class="er-sr"></span>' . "\n";
 }, 1 );
 
 add_filter( 'body_class', function ( $c ) {

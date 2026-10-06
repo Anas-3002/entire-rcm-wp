@@ -388,6 +388,10 @@ function er_rcm_install_legal() {
 			'Privacy Policy',
 			'<p class="er-p">Entire RCM Inc. processes protected health information strictly as a Business Associate under HIPAA. We execute a Business Associate Agreement before any client data is transferred, encrypt all data in transit with TLS 1.3, and never sell or share practice or patient data with third parties.</p><p class="er-p">To request a copy of our BAA, our SOC-2 Type II attestation, or to have your practice data deleted, contact us at ' . ER_RCM_LEAD_EMAIL . '.</p>',
 		),
+		'client-portal' => array(
+			'Client Portal',
+			'<p class="er-p">The Entire RCM client portal gives practice principals 24/7 access to live claims velocity, collections by provider, aging buckets and payer payment speeds.</p><p class="er-p">Portal access is issued to named practice administrators during onboarding. To request access or add a user, call <a href="tel:+18884207261">+1 (888) 420-RCM1</a> or email <a href="mailto:' . ER_RCM_LEAD_EMAIL . '">' . ER_RCM_LEAD_EMAIL . '</a>.</p>',
+		),
 		'terms-of-service' => array(
 			'Terms of Service',
 			'<p class="er-p">Entire RCM Inc. provides revenue cycle management, medical coding, prior authorization and denial-appeal services under a percentage-of-collections commercial model. Engagement terms, service level commitments and termination rights are defined in the signed Master Services Agreement.</p><p class="er-p">For a copy of our standard MSA, contact ' . ER_RCM_LEAD_EMAIL . '.</p>',

@@ -111,7 +111,7 @@ menu = C('er-menu', [BTN(t, h, 'er-menulink') for t, h in menu_items],
 
 nav_actions = C('er-nav__actions', [
     BTN('<span class="er-ico er-ico--md er-ico--sec">call</span> +1 (888) 420-RCM1', TEL, 'er-nav__phone'),
-    BTN('Client Portal', '#client-portal', 'er-nav__portal'),
+    BTN('Client Portal', '/client-portal/', 'er-nav__portal'),
     BTN('Book Free Audit', '#schedule-audit', 'er-nav__cta'),
     HTML('<button type="button" class="er-burger" aria-label="Open menu" aria-expanded="false" '
          'onclick="erToggleDrawer(true)"><span class="er-ico er-ico--lg">menu</span></button>', 'er-burger-wrap'),
@@ -128,7 +128,7 @@ drawer = C('er-drawer', [
     C('er-drawer__nav', [BTN(t, h, 'er-menulink er-menulink--drawer') for t, h in menu_items]),
     C('er-drawer__actions', [
         BTN('<span class="er-ico er-ico--md er-ico--sec">call</span> +1 (888) 420-RCM1', TEL, 'er-nav__phone'),
-        BTN('Client Portal', '#client-portal', 'er-nav__portal'),
+        BTN('Client Portal', '/client-portal/', 'er-nav__portal'),
         BTN('Book Free Audit', '#schedule-audit', 'er-nav__cta'),
     ]),
 ], eid="er-drawer")
@@ -611,7 +611,7 @@ footer = C('er-footer', [C('er-wrap', [
     C('er-footer__bottom', [
         P('<span>&copy; 2025 Entire RCM Inc. All rights reserved. Registered Healthcare BPO.</span>'),
         C('er-footer__legal', [
-            P('<a href="#privacy-policy">Privacy Policy</a> &bull; <a href="#terms-of-service">Terms of Service</a>'),
+            P('<a href="/privacy-policy/">Privacy Policy</a> &bull; <a href="/terms-of-service/">Terms of Service</a>'),
             P('<span class="er-footer__badge"><span class="er-ico er-ico--sm">lock</span> End-to-End TLS 1.3 256-Bit Financial Encryption</span>'),
         ], extra={"flex_direction": "row", "flex_wrap": "wrap"}),
     ], extra={"flex_direction": "row", "justify_content": "space-between", "align_items": "center"}),
