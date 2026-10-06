@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 define( 'ER_RCM_VERSION', '1.1.0' );
 define( 'ER_RCM_DIR', __DIR__ . '/entire-rcm' );
-define( 'ER_RCM_URL', WPMU_PLUGIN_URL . '/entire-rcm' );
+define( 'ER_RCM_URL', plugins_url( 'entire-rcm', __FILE__ ) );
 
 /**
  * Front-end assets: fonts + design system + interactions.
