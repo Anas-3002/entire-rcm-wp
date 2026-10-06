@@ -253,7 +253,7 @@ pillars_sec = C('er-sec er-bg-lowest', [C('er-wrap', [
         P('<p class="er-p er-mt-sm">Engineered to eradicate human error, bypass payer road-blocks, and collect every '
           'cent your physicians earned.</p>'),
     ], extra={"flex_direction": "column", "align_items": "center"}),
-    C('er-grid er-grid--4 er-mt-xl', pillar_cards, extra={"flex_direction": "row", "flex_wrap": "wrap"}),
+    C('er-grid er-grid--4', pillar_cards, extra={"flex_direction": "row", "flex_wrap": "wrap"}),
 ])], eid="pillars")
 
 # ---- 5. BENTO / TECHNOLOGY ----------------------------------------------
