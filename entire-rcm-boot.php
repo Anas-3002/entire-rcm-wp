@@ -86,6 +86,52 @@ add_action( 'admin_init', function () {
 }, 5 );
 
 /**
+ * Introspection helper: /wp-admin/?er_rcm_peek=1
+ * Reports Elementor's registered control names for containers and widgets, plus
+ * what is actually stored in the page's _elementor_data meta.
+ */
+add_action( 'admin_init', function () {
+	if ( ! isset( $_GET['er_rcm_peek'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
+		return;
+	}
+	if ( ! current_user_can( 'manage_options' ) ) {
+		wp_die( 'Forbidden', 403 );
+	}
+
+	$out = array( 'elementor' => defined( 'ELEMENTOR_VERSION' ) ? ELEMENTOR_VERSION : null );
+
+	if ( class_exists( '\Elementor\Plugin' ) ) {
+		$mgr = \Elementor\Plugin::$instance->elements_manager;
+		foreach ( array( 'container', 'section', 'column' ) as $type ) {
+			$obj = $mgr->get_element_types( $type );
+			if ( $obj ) {
+				$out['controls'][ $type ] = array_keys( (array) $obj->get_controls() );
+			}
+		}
+		$wmgr = \Elementor\Plugin::$instance->widgets_manager;
+		foreach ( array( 'heading', 'button', 'accordion' ) as $type ) {
+			$obj = $wmgr->get_widget_types( $type );
+			if ( $obj ) {
+				$out['controls'][ 'widget:' . $type ] = array_keys( (array) $obj->get_controls() );
+			}
+		}
+	}
+
+	$page_id = (int) get_option( 'er_rcm_page_id' );
+	$raw     = get_post_meta( $page_id, '_elementor_data', true );
+	$decoded = json_decode( (string) $raw, true );
+	if ( is_array( $decoded ) ) {
+		$out['stored_first_container_settings'] = $decoded[0]['settings'];
+		$out['stored_count']                    = count( $decoded );
+		$out['first_container_has_css_classes'] = isset( $decoded[0]['settings']['_css_classes'] );
+	}
+
+	header( 'Content-Type: application/json; charset=utf-8' );
+	echo wp_json_encode( $out, JSON_PRETTY_PRINT );
+	exit;
+}, 3 );
+
+/**
  * Diagnostics: /wp-admin/?er_rcm_log=1 dumps the last install log.
  */
 add_action( 'admin_init', function () {
