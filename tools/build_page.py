@@ -346,25 +346,21 @@ CALC = '''
 </div>'''
 
 calc_sec = C('er-sec er-bg-primary', [C('er-wrap', [
-    C('er-maxw-2xl', [
-        P('<span class="er-eyebrow er-eyebrow--onPrimary">Practice Yield Calculator</span>'),
-        H('h2', 'See Exactly How Much Revenue You Are Leaving on the Table', 'er-h2'),
-        P('<p class="er-p er-on-dark er-mt-sm">Adjust the sliders to match your clinic\'s billing parameters. Our '
-          'calculator computes recoverable write-offs, accelerated cash flow, and overall net practice yield.</p>'),
-    ], extra={"flex_direction": "column", "align_items": "flex-start"}),
     C('er-calc__grid', [
         C('er-calc__left', [
+            P('<span class="er-eyebrow er-eyebrow--onPrimary">Practice Yield Calculator</span>'),
+            H('h2', 'See Exactly How Much Revenue You Are Leaving on the Table', 'er-h2'),
+            P('<p class="er-p er-on-dark er-mt-sm">Adjust the sliders to match your clinic\'s billing parameters. Our '
+              'calculator computes recoverable write-offs, accelerated cash flow, and overall net practice yield.</p>'),
             P('<ul class="er-calc__checks">'
               '<li><span class="er-ico er-ico--md er-ico--ter">check</span> Real-time calculations based on 2024&ndash;2025 HFMA benchmark data</li>'
               '<li><span class="er-ico er-ico--md er-ico--ter">check</span> Factor in staff overhead savings &amp; eliminated billing software costs</li>'
               '<li><span class="er-ico er-ico--md er-ico--ter">check</span> Immediate itemized breakdown available for board review</li></ul>'),
-            P('<p class="er-p er-on-dark er-mt-md">Modeled on 1,200+ engagements across 35+ clinical subspecialties. '
-              'Every figure is auditable against your own 835 ERA history.</p>'),
+            C('er-hero__cta', [BTN('Lock In Guarantee', '#schedule-audit', 'er-btn er-btn--secondary')],
+              extra={"flex_direction": "row"}),
         ]),
         HTML(CALC, 'er-calc__right'),
     ], extra={"flex_direction": "row", "flex_wrap": "wrap"}),
-    C('er-hero__cta', [BTN('Lock In Guarantee', '#schedule-audit', 'er-btn er-btn--secondary')],
-      extra={"flex_direction": "row"}),
 ])], eid="interactive-calculator-section")
 
 # ---- 7. SECURITY ---------------------------------------------------------

@@ -998,3 +998,40 @@ body.er-drawer-open { overflow: hidden; }
 .er-body .er-chart__legend span { gap: .35rem; }
 .er-body .er-chart__head { gap: .25rem 1rem; }
 .er-body .er-payers__head { gap: .5rem 1rem; }
+
+/* ---- Rhythm parity with the source design ----------------------------------
+   The Stitch design is built on Tailwind, whose preflight zeroes every element
+   margin; all spacing there is explicit. Without this reset the browser's
+   default <p>/<h*> margins silently inflate every stacked section. Margins are
+   therefore zeroed here and replaced by the deliberate gaps below. */
+.er-body h1, .er-body h2, .er-body h3, .er-body h4, .er-body h5, .er-body h6,
+.er-body p, .er-body ul, .er-body ol, .er-body li, .er-body figure,
+.er-body blockquote, .er-body dl, .er-body dd, .er-body pre { margin: 0; }
+.er-body ul, .er-body ol { padding-left: 0; list-style: none; }
+
+/* Deliberate vertical rhythm for stacked column containers. */
+.er-body .er-wrap { gap: 1.5rem; }
+.er-body .er-wrap--tight, .er-body .er-wrap--narrow { gap: 1.5rem; }
+.er-body .er-hero__copy { gap: .75rem; }
+.er-body .er-quickcard { gap: .75rem; }
+.er-body .er-cta__copy, .er-body .er-cta__form { gap: .75rem; }
+.er-body .er-calc__left { gap: .5rem; }
+.er-body .er-calc__right, .er-body .er-calc__controls { gap: 0; }
+.er-body .er-calc__out { gap: 0; }
+.er-body .er-pillar, .er-body .er-feat, .er-body .er-case,
+.er-body .er-price__card, .er-body .er-seccard, .er-body .er-guar__txt { gap: .5rem; }
+.er-body .er-case__who-txt { gap: .1rem; }
+.er-body .er-footer__col { gap: 0; }
+.er-body .er-footer__cta-copy { gap: .5rem; }
+.er-body .er-versus__card--bad > *, .er-body .er-versus__card--good > * { margin: 0; }
+.er-body .er-tile > *, .er-body .er-chart > * { margin: 0; }
+.er-body .er-calc__out .er-tile__l,
+.er-body .er-calc__out .er-tile__v,
+.er-body .er-calc__out .er-tile__d { margin: 0; }
+.er-body .er-calc__out .er-tile__v { margin-top: .25rem; }
+.er-body .er-calc__3yr { margin-top: 1.25rem; padding-top: 1.25rem; }
+.er-body .er-payers__head, .er-body .er-payers__row, .er-body .er-payers__foot { margin: 0; }
+.er-body .er-case__meta, .er-body .er-case__metrics, .er-body .er-case__who { margin: 0; }
+.er-body .er-quote__text { margin: 1rem 0 1.5rem; }
+.er-body .er-faq .elementor-accordion-item { margin-bottom: .5rem; }
+.er-body .er-form__grid > * { margin: 0; }
