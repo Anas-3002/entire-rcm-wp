@@ -436,23 +436,33 @@ function er_rcm_install_legal() {
 	);
 	foreach ( $docs as $slug => $d ) {
 		$existing = get_page_by_path( $slug );
-		if ( $existing ) {
-			$made[ $slug ] = (int) $existing->ID;
-			continue;
-		}
-		$id = wp_insert_post(
-			array(
-				'post_title'   => $d[0],
-				'post_name'    => $slug,
-				'post_type'    => 'page',
-				'post_status'  => 'publish',
-				'post_content' => $d[1],
-			)
+
+		// WordPress pre-creates the privacy page as a draft, which 404s on the
+		// front end. Always publish it and make sure it carries our copy.
+		$payload = array(
+			'post_title'   => $d[0],
+			'post_name'    => $slug,
+			'post_type'    => 'page',
+			'post_status'  => 'publish',
+			'post_content' => $d[1],
 		);
-		if ( ! is_wp_error( $id ) ) {
+
+		if ( $existing ) {
+			$payload['ID'] = (int) $existing->ID;
+			$id            = wp_update_post( $payload );
+		} else {
+			$id = wp_insert_post( $payload );
+		}
+
+		if ( ! is_wp_error( $id ) && $id ) {
 			$made[ $slug ] = (int) $id;
 		}
 	}
+
+	if ( isset( $made['privacy-policy'] ) ) {
+		update_option( 'wp_page_for_privacy_policy', $made['privacy-policy'] );
+	}
+
 	return $made;
 }
 
