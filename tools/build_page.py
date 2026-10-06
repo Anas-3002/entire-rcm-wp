@@ -12,9 +12,11 @@ def pad(v='0'):
 NO_PAD = {"unit": "px", "top": "0", "right": "0", "bottom": "0", "left": "0", "isLinked": True}
 
 def C(classes='', children=None, *, full=True, eid=None, direction=None, gap=None, extra=None):
+    # NOTE: Elementor 4.x names the custom-class control `css_classes` on
+    # containers/sections/columns, while widgets still use `_css_classes`.
     s = {"content_width": "full" if full else "boxed", "padding": NO_PAD,
          "margin": NO_PAD, "flex_direction": direction or "column"}
-    if classes: s["_css_classes"] = classes
+    if classes: s["css_classes"] = classes
     if eid: s["_element_id"] = eid
     if gap: s["gap"] = gap
     if extra: s.update(extra)
