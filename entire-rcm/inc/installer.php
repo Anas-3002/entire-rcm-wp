@@ -131,6 +131,29 @@ function er_rcm_install_forms() {
 		$id = (int) $id;
 
 		update_post_meta( $id, '_er_rcm_form_key', $key );
+
+		// CF7 6.x keeps contact forms behind its own save API; writing the meta
+		// directly is silently ignored, so always go through the API and keep the
+		// raw meta writes only as a fallback for older versions.
+		if ( function_exists( 'wpcf7_save_contact_form' ) ) {
+			$saved = wpcf7_save_contact_form(
+				array(
+					'id'                  => $id,
+					'title'               => $def['title'],
+					'locale'              => 'en_US',
+					'form'                => $def['form'],
+					'mail'                => $def['mail'],
+					'mail_2'              => array( 'active' => false ),
+					'messages'            => er_rcm_cf7_messages(),
+					'additional_settings' => "skip_mail: off\n",
+				)
+			);
+			if ( ! $saved ) {
+				$log_note = 'wpcf7_save_contact_form returned false for ' . $key;
+				error_log( $log_note ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions
+			}
+		}
+
 		update_post_meta( $id, '_form', $def['form'] );
 		update_post_meta( $id, '_mail', $def['mail'] );
 		update_post_meta( $id, '_mail_2', array( 'active' => false ) );

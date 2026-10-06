@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'ER_RCM_VERSION', '1.8.0' );
+define( 'ER_RCM_VERSION', '1.9.0' );
 define( 'ER_RCM_DIR', __DIR__ . '/entire-rcm' );
 define( 'ER_RCM_URL', plugins_url( 'entire-rcm', __FILE__ ) );
 
@@ -132,6 +132,19 @@ add_action( 'admin_init', function () {
 		$out['stored_first_container_settings'] = $decoded[0]['settings'];
 		$out['stored_count']                    = count( $decoded );
 		$out['first_container_has_css_classes'] = isset( $decoded[0]['settings']['_css_classes'] );
+	}
+
+	foreach ( get_posts( array( 'post_type' => 'wpcf7_contact_form', 'numberposts' => 6, 'post_status' => 'publish' ) ) as $cf ) {
+		$p    = function_exists( 'wpcf7_contact_form' ) ? wpcf7_contact_form( $cf->ID ) : null;
+		$prop = $p ? $p->get_properties() : array();
+		$out['forms'][ $cf->ID ] = array(
+			'title'           => $cf->post_title,
+			'meta_keys'       => array_keys( get_post_meta( $cf->ID ) ),
+			'prop_mail_subj'  => isset( $prop['mail']['subject'] ) ? $prop['mail']['subject'] : null,
+			'prop_mail_to'    => isset( $prop['mail']['recipient'] ) ? $prop['mail']['recipient'] : null,
+			'prop_mail_from'  => isset( $prop['mail']['sender'] ) ? $prop['mail']['sender'] : null,
+			'prop_form_head'  => isset( $prop['form'] ) ? substr( $prop['form'], 0, 90 ) : null,
+		);
 	}
 
 	header( 'Content-Type: application/json; charset=utf-8' );
