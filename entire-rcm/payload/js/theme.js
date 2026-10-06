@@ -95,7 +95,21 @@
   }
 
   /* ----------------------------------------------------------- wire up -- */
+  /* Keep the hero clear of the fixed header at every breakpoint. */
+  function syncHeaderHeight() {
+    var h = document.querySelector('.er-header');
+    if (!h) return;
+    document.documentElement.style.setProperty('--er-header-h', h.offsetHeight + 'px');
+  }
+
   ready(function () {
+    syncHeaderHeight();
+    window.addEventListener('resize', syncHeaderHeight);
+    window.addEventListener('load', syncHeaderHeight);
+    if (window.ResizeObserver) {
+      var h = document.querySelector('.er-header');
+      if (h) new ResizeObserver(syncHeaderHeight).observe(h);
+    }
     ['calc-volume-slider', 'calc-denial-slider', 'calc-ar-slider'].forEach(function (id) {
       var el = document.getElementById(id);
       if (el) el.addEventListener('input', updateROICalculator);
