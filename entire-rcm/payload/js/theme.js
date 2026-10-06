@@ -64,13 +64,24 @@
   }
 
   /* ------------------------------------------------------------ tabs ---- */
-  function bindFilter(selector, attr, allKey) {
+  /* Elementor puts our custom classes on the widget WRAPPER; the href lives
+     on the inner <a class="elementor-button">. Always resolve through both. */
+  function hrefOf(el) {
+    var a = el.matches('a[href]') ? el : el.querySelector('a[href]');
+    return a ? a.getAttribute('href') : '';
+  }
+  function keyOf(el, prefix) {
+    var raw = hrefOf(el).replace('#', '');
+    return (prefix && raw.indexOf(prefix) === 0) ? raw.slice(prefix.length) : raw;
+  }
+
+  function bindFilter(selector, attr, allKey, prefix) {
     var btns = document.querySelectorAll(selector);
     if (!btns.length) return;
     btns.forEach(function (btn) {
       btn.addEventListener('click', function (e) {
         e.preventDefault();
-        var key = (btn.getAttribute('href') || '').replace('#', '').replace(attr + '-', '');
+        var key = keyOf(btn, prefix);
         btns.forEach(function (b) {
           b.classList.toggle('is-active', b === btn);
         });
@@ -118,13 +129,13 @@
 
     var qs = document.getElementById('audit-specialty');
     var qr = document.getElementById('audit-monthly-volume');
-    if (qs) qs.addEventListener('change', function () { runQuickAudit(false); });
-    if (qr) qr.addEventListener('input', function () { runQuickAudit(false); });
+    if (qs) qs.addEventListener('change', function () { runQuickAudit(true); });
+    if (qr) qr.addEventListener('input', function () { runQuickAudit(true); });
     runQuickAudit(false);
     var qbtn = document.getElementById('audit-quick-btn');
     if (qbtn) qbtn.addEventListener('click', function () { runQuickAudit(true); });
 
-    bindFilter('.er-cases__tabs .er-tab', 'data-specialty', 'all');
+    bindFilter('.er-cases__tabs .er-tab', 'data-specialty', 'all', 'cs-');
 
     document.querySelectorAll('.er-price__toggle .er-tab').forEach(function (btn) {
       btn.addEventListener('click', function (e) {
@@ -132,7 +143,7 @@
         document.querySelectorAll('.er-price__toggle .er-tab').forEach(function (b) {
           b.classList.toggle('is-active', b === btn);
         });
-        setPricingScale(btn.getAttribute('href').indexOf('growth') > -1 ? 'growth' : 'standard');
+        setPricingScale(keyOf(btn, 'scale-').indexOf('growth') > -1 ? 'growth' : 'standard');
       });
     });
 

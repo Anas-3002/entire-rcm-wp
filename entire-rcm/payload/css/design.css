@@ -907,23 +907,43 @@ body.er-drawer-open { overflow: hidden; }
 .er-body .elementor-widget-text-editor ol { margin-top: 0; }
 .er-body .elementor-widget-html .elementor-widget-container { font: inherit; color: inherit; }
 
-/* Elementor renders buttons as `a.elementor-button` inside the wrapper. */
-.er-body .er-btn .elementor-button,
-.er-body .er-btn .elementor-button:visited {
-  display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
-  font-family: var(--er-body); font-size: clamp(.8125rem, .79rem + .12vw, .875rem);
-  font-weight: 600; line-height: 1.43; letter-spacing: .005em;
-  width: 100%; background: inherit; color: inherit; border: 0; box-shadow: none;
-  padding: 0; margin: 0; text-align: center; transition: none;
+/* Elementor renders buttons as `a.elementor-button` INSIDE our wrapper, and our
+   classes land on the wrapper. Neutralise Elementor's own button paint so every
+   button is drawn entirely by the wrapper's design class. */
+.er-body .elementor-widget-button .elementor-button,
+.er-body .elementor-widget-button .elementor-button:visited,
+.er-body .elementor-widget-button .elementor-button:hover,
+.er-body .elementor-widget-button .elementor-button:focus {
+  background: transparent;
+  color: inherit;
+  border: 0;
+  box-shadow: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  min-width: 0;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  border-radius: inherit;
+  box-shadow: none;
+  transform: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+  text-align: inherit;
 }
-.er-body .er-btn .elementor-button-content-wrapper { display: inline-flex; align-items: center; justify-content: center; gap: .5rem; }
+.er-body .er-btn .elementor-button-content-wrapper,
+.er-body .er-tab .elementor-button-content-wrapper,
+.er-body .er-menulink .elementor-button-content-wrapper { display: inline-flex; align-items: center; justify-content: center; gap: .5rem; }
+.er-body .er-btn .elementor-button-text,
+.er-body .er-menulink .elementor-button-text { display: inline-flex; align-items: center; gap: .5rem; }
 .er-body .er-btn--block .elementor-button { width: 100%; }
-.er-body .er-btn .elementor-button-text { display: inline-flex; align-items: center; gap: .5rem; }
-/* Elementor paints its own hover colour on the inner anchor; let the wrapper drive it. */
-.er-body .er-btn:hover .elementor-button { color: inherit; background: transparent; }
-
-/* Elementor's global button defaults must not leak into nav links. */
-.er-body .er-menulink .elementor-button { padding: 0; width: auto; }
+.er-body .er-menulink .elementor-button { width: auto; padding: 0; }
 .er-body .er-menulink .elementor-button-content-wrapper { gap: 0; }
 
 /* Buttons that are plain <button>/<input> inside CF7 forms. */
@@ -1053,3 +1073,14 @@ body.er-drawer-open { overflow: hidden; }
 /* Testimonial card uses the design's smaller avatar and padding. */
 .er-quote { padding: 1.5rem; }
 .er-quote .er-case__avatar { width: 2.5rem; height: 2.5rem; background: rgba(224,224,255,.6); color: var(--er-primary); font-size: .75rem; }
+
+/* Custom-classed button widgets render as wrappers; make them inline boxes so
+   their padding, radius and background behave like the design's <a>/<button>. */
+.er-body .er-tab,
+.er-body .er-menulink,
+.er-body .er-nav__portal,
+.er-body .er-nav__phone,
+.er-body .er-nav__cta { display: inline-flex; align-items: center; justify-content: center; }
+.er-body .er-tab { line-height: 1.3; }
+.er-body .er-cases__tabs .er-tab,
+.er-body .er-price__toggle .er-tab { flex: 0 0 auto; }
