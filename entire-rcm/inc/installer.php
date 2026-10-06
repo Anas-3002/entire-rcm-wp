@@ -256,27 +256,41 @@ HTML;
 <button type="submit" class="er-btn er-btn--secondary"><span>Book Audit</span></button>
 HTML;
 
-	$mail_body = "New Entire RCM audit request.\n\n"
-		. "Submitted: [_date] [_time]\n"
-		. "Source page: [_source_url]\n\n"
-		. "-------------------------------\n"
-		. "[all-fields]\n";
+	$stamp = "\n\nSubmitted: [_date] [_time]\nSource page: [_source_url]\n";
+
+	$body_quick = 'New quick practice-yield estimate request.' . $stamp . "\n"
+		. "Clinical specialty: [audit-specialty]\n"
+		. "Monthly billing collections: [audit-monthly-volume]\n"
+		. "Practice admin / doctor: [admin-name]\n"
+		. "Work email: [work-email]\n";
+
+	$body_audit = 'New 30-Day Revenue Cycle Health Audit request.' . $stamp . "\n"
+		. "Full name & title: [full-name]\n"
+		. "Clinic / practice: [clinic-name]\n"
+		. "Email: [practice-email]\n"
+		. "Direct phone: [direct-phone]\n"
+		. "Current EHR / billing software: [ehr-system]\n"
+		. "Number of billing providers: [provider-count]\n"
+		. "Primary revenue cycle hurdle: [revenue-hurdle]\n";
+
+	$body_footer = 'New footer audit request.' . $stamp . "\n"
+		. "Institutional email: [institutional-email]\n";
 
 	return array(
 		'quick'  => array(
 			'title' => 'Instant Practice Yield Estimate',
 			'form'  => $quick,
-			'mail'  => er_rcm_mail( 'Quick yield estimate — [admin-name] ([work-email])', 'Reply-To: [admin-name] <[work-email]>', $mail_body ),
+			'mail'  => er_rcm_mail( 'Quick yield estimate - [admin-name] ([work-email])', 'Reply-To: [admin-name] <[work-email]>', $body_quick ),
 		),
 		'audit'  => array(
 			'title' => '30-Day Revenue Cycle Health Audit',
 			'form'  => $audit,
-			'mail'  => er_rcm_mail( 'Revenue Cycle Audit request — [clinic-name]', 'Reply-To: [full-name] <[practice-email]>', $mail_body ),
+			'mail'  => er_rcm_mail( 'Revenue Cycle Audit request - [clinic-name]', 'Reply-To: [full-name] <[practice-email]>', $body_audit ),
 		),
 		'footer' => array(
-			'title' => 'Footer — Book Audit',
+			'title' => 'Footer - Book Audit',
 			'form'  => $footer,
-			'mail'  => er_rcm_mail( 'Footer audit request — [institutional-email]', 'Reply-To: [institutional-email]', $mail_body ),
+			'mail'  => er_rcm_mail( 'Footer audit request - [institutional-email]', 'Reply-To: [institutional-email]', $body_footer ),
 		),
 	);
 }
@@ -505,5 +519,15 @@ function er_rcm_install_cleanup() {
 	}
 	// Activate Flamingo storage for every form (it stores all CF7 submissions).
 	update_option( 'flamingo_contact_consent', 1, false );
+
+	// Remove Contact Form 7's stock "Contact form 1" so the site only shows
+	// the form management triple the design actually uses.
+	foreach ( get_posts( array( 'post_type' => 'wpcf7_contact_form', 'numberposts' => 20, 'post_status' => 'any' ) ) as $p ) {
+		if ( ! get_post_meta( $p->ID, '_er_rcm_form_key', true ) ) {
+			wp_delete_post( $p->ID, true );
+			$removed[] = 'cf7-default-' . $p->ID;
+		}
+	}
+
 	return array( 'removed' => $removed, 'active_theme' => get_option( 'stylesheet' ) );
 }
