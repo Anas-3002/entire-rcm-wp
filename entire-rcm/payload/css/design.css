@@ -1010,8 +1010,8 @@ body.er-drawer-open { overflow: hidden; }
 .er-body ul, .er-body ol { padding-left: 0; list-style: none; }
 
 /* Deliberate vertical rhythm for stacked column containers. */
-.er-body .er-wrap { gap: 2.5rem; }
-.er-body .er-wrap--tight, .er-body .er-wrap--narrow { gap: 2rem; }
+.er-body .er-wrap { gap: 1.5rem; }
+.er-body .er-wrap--tight, .er-body .er-wrap--narrow { gap: 1.5rem; }
 .er-body .er-hero__copy { gap: .75rem; }
 .er-body .er-quickcard { gap: .75rem; }
 .er-body .er-cta__copy, .er-body .er-cta__form { gap: .75rem; }
@@ -1035,3 +1035,21 @@ body.er-drawer-open { overflow: hidden; }
 .er-body .er-quote__text { margin: 1rem 0 1.5rem; }
 .er-body .er-faq .elementor-accordion-item { margin-bottom: .5rem; }
 .er-body .er-form__grid > * { margin: 0; }
+
+/* Security section mirrors the design: copy on the left, cards + payer
+   directory stacked on the right. */
+.er-body .er-security__grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
+@media (min-width: 1024px) { .er-body .er-security__grid { grid-template-columns: repeat(2, minmax(0,1fr)); gap: 1.5rem; } }
+.er-body .er-security__right { display: flex; flex-direction: column; gap: 1.5rem; }
+@media (min-width: 1024px) { .er-body .er-security__cards { grid-template-columns: repeat(2, minmax(0,1fr)); } }
+
+/* Bento tiles and chart at the design's compact scale. */
+.er-tile { padding: .5rem .75rem; }
+.er-tile__v { font-size: clamp(1.125rem, 1rem + .5vw, 1.375rem); }
+.er-feat { padding: 1rem; }
+.er-chart { padding: .75rem; margin-top: 1.25rem; }
+.er-chart svg { height: 96px; }
+
+/* Testimonial card uses the design's smaller avatar and padding. */
+.er-quote { padding: 1.5rem; }
+.er-quote .er-case__avatar { width: 2.5rem; height: 2.5rem; background: rgba(224,224,255,.6); color: var(--er-primary); font-size: .75rem; }

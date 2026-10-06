@@ -382,21 +382,23 @@ payer_tbl = C('er-payers', [
 ], extra={"flex_direction": "column"})
 
 security = C('er-sec er-bg-low', [C('er-wrap', [
-    C('er-security__head', [
-        C('er-maxw-2xl', [
+    C('er-security__grid', [
+        C('er-security__head', [
             P('<span class="er-eyebrow">Institutional Security &amp; Jurisdiction</span>'),
             H('h2', 'Bank-Grade Financial Security &amp; Full 50-State Payer Coverage', 'er-h2'),
             P('<p class="er-p er-mt-md">Entire RCM operates with the rigorous compliance posture mandated by major '
               'healthcare networks. We execute comprehensive Business Associate Agreements (BAA) with every medical '
               'client before onboarding.</p>'),
         ], extra={"flex_direction": "column", "align_items": "flex-start"}),
+        C('er-security__right', [
+            C('er-security__cards', [C('er-seccard', [
+                P(f'<div class="er-pillar__icon"><span class="er-ico er-ico--lg">{ic}</span></div>'),
+                H('h3', t, 'er-h4'),
+                P(f'<p class="er-p-sm er-mt-sm">{d}</p>'),
+            ]) for ic, t, d in seccards], extra={"flex_direction": "row", "flex_wrap": "wrap"}),
+            payer_tbl,
+        ]),
     ], extra={"flex_direction": "row", "flex_wrap": "wrap"}),
-    C('er-security__cards', [C('er-seccard', [
-        P(f'<div class="er-pillar__icon"><span class="er-ico er-ico--lg">{ic}</span></div>'),
-        H('h3', t, 'er-h4'),
-        P(f'<p class="er-p-sm er-mt-sm">{d}</p>'),
-    ]) for ic, t, d in seccards], extra={"flex_direction": "row", "flex_wrap": "wrap"}),
-    payer_tbl,
 ])])
 
 # ---- 8. CASE STUDIES -----------------------------------------------------
