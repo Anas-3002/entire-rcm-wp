@@ -856,7 +856,12 @@ body.er-drawer-open { overflow: hidden; }
 .er-chart__legend span { display: inline-flex; align-items: center; gap: .35rem; }
 .er-chart__sw { width: .75rem; height: .125rem; background: rgba(255,255,255,.4); display: inline-block; }
 .er-chart__sw--rcm { background: var(--er-tertiary-soft); }
-.er-chart__title { font-size: .6875rem; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--er-surface-highest); margin-top: .5rem !important; }
+.er-chart__title { font-size: .6875rem; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--er-surface-highest); margin: 0 !important; }
+.er-chart__head { display: flex; flex-wrap: wrap; gap: .25rem 1rem; align-items: baseline; justify-content: space-between; }
+.er-chart__cmp { font-size: .6875rem; font-weight: 600; color: var(--er-tertiary-soft); white-space: nowrap; }
+
+.er-payers__head { display: flex; flex-wrap: wrap; gap: .5rem 1rem; align-items: center; justify-content: space-between; }
+.er-payers__badge { padding: .125rem .625rem; border-radius: 9999px; background: var(--er-primary-fixed); color: var(--er-secondary); font-size: .625rem; font-weight: 700; letter-spacing: .04em; text-transform: none; }
 
 /* Stat cards inside grid */
 .er-body .er-stat { padding: 0; }

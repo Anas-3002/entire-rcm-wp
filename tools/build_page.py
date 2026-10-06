@@ -227,15 +227,15 @@ pillars = [
     ("Pillar 01", "rule", "AI Claims Scrubbing Engine",
      "Every claim passes through 3-tier validation: patient eligibility checks, NCCI edit scrubbing, and LCD/NCD coverage policies before electronic clearinghouse dispatch.",
      "99.2% First-Pass Clean"),
-    ("Pillar 02", "badge", "AAPC &amp; AHIMA Certified Coders",
+    ("Pillar 02", "verified", "AAPC &amp; AHIMA Certified Coders",
      "Double-board certified medical coders ensure exact ICD-10, CPT, and HCPCS modifier allocation&mdash;protecting your revenue yield while shielding against federal CMS audit risks.",
-     "100% Credentialed Staff"),
+     "Zero Under-Coding Risk"),
     ("Pillar 03", "gavel", "Relentless Appeals &amp; Denial AR",
      "Denied claims are categorized immediately by CARC/RARC codes and appealed with medical necessity packets within 48 hours. Zero aging balances written off passively.",
-     "99.9% Appeal Win Rate"),
-    ("Pillar 04", "credit_card", "Frictionless Patient Billing",
+     "48-Hour Appeal Dispatch"),
+    ("Pillar 04", "contactless", "Frictionless Patient Billing",
      "Clear, transparent digital statements, SMS Text-to-Pay, secure patient portal payments, and empathetic US-based patient financial billing support that preserves patient goodwill.",
-     "92% Patient Satisfaction"),
+     "3.8x Faster Patient Collections"),
 ]
 pillar_cards = [C('er-pillar', [
     C('er-pillar__top', [P(f'<div class="er-pillar__icon"><span class="er-ico er-ico--lg">{ic}</span></div>'),
@@ -268,9 +268,8 @@ CHART = (
     '<polyline points="0,72 64,66 128,58 192,44 256,30 320,14" fill="none" stroke="#4edea3" stroke-width="3" stroke-linecap="round"/>'
     '<polyline points="0,78 64,76 128,74 192,72 256,70 320,69" fill="none" stroke="rgba(255,255,255,.35)" '
     'stroke-width="2" stroke-dasharray="5 5" stroke-linecap="round"/></svg>'
-    '<div class="er-chart__legend"><span><i class="er-chart__sw er-chart__sw--rcm"></i>Entire RCM</span>'
-    '<span><i class="er-chart__sw"></i>Historic Baseline</span></div>'
-    '<p class="er-chart__title">Collections Velocity Trend (Last 6 Months)</p></div>')
+    '<div class="er-chart__head"><p class="er-chart__title">Collections Velocity Trend (Last 6 Months)</p>'
+    '<span class="er-chart__cmp">Entire RCM vs Historic Baseline</span></div></div>')
 
 bento_main = C('er-bento__main', [
     P('<span class="er-eyebrow er-eyebrow--onPrimary">Live BI Portal</span>'),
@@ -376,10 +375,11 @@ seccards = [("lock", "256-Bit TLS 1.3", "Encrypted clearinghouse file transfer p
 payers = [("Medicare Part A/B &amp; Railroad Medicare", "Noridian, Novitas, Palmetto, NGS, WPS"),
           ("National Commercial Payers", "BCBS (All States), UHC, Aetna, Cigna, Humana"),
           ("State Medicaid &amp; Managed Medicaid (MCO)", "Centene, Molina, CareSource, WellCare"),
-          ("Workers&rsquo; Comp &amp; No-Fault Auto PIP", "State-specific fee schedule compliance")]
+          ("Workers' Comp &amp; No-Fault Auto PIP", "State-specific fee schedule compliance")]
 
 payer_tbl = C('er-payers', [
-    P('<div class="er-payers__head">50-State Payer Interoperability Directory</div>'),
+    P('<div class="er-payers__head"><span>50-State Payer Interoperability Directory</span>'
+      '<span class="er-payers__badge">Active Clearinghouse Links</span></div>'),
 ] + [P(f'<div class="er-payers__row"><strong>{a}</strong><span>{b}</span></div>') for a, b in payers] + [
     P('<div class="er-payers__foot"><strong>EDI Transaction Standards:</strong> ANSI X12 837P, 837I, 835, '
       '270/271, 276/277</div>'),

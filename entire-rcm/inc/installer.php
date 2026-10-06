@@ -186,7 +186,7 @@ function er_rcm_form_definitions() {
 		<span class="er-ico er-ico--md er-ico--sec">verified</span>
 		<span class="er-h4">Estimated Annual Recovery: <span id="quick-result-lift">$48,500</span></span>
 	</div>
-	<p class="er-p-sm" id="quick-result-summary">Based on average specialty claim denial leakages, Entire RCM recovers up to 14.8% in previously write-off-prone revenue within 60 days.</p>
+	<p class="er-p-sm" id="quick-result-summary">Based on typical 16% denial leakages in your specialty, Entire RCM recovers an average of 14.2% additional cash within the first 60 days.</p>
 	<p class="er-mt-sm"><a class="er-link" href="#schedule-audit">Reserve Your Audit Slot <span class="er-ico er-ico--sm">arrow_right_alt</span></a></p>
 </div>
 <button type="submit" id="audit-quick-btn" class="er-btn er-btn--secondary er-btn--block">
