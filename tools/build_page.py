@@ -446,7 +446,7 @@ quote = C('er-quote', [
       extra={"flex_direction": "row", "align_items": "center"}),
 ])
 
-cases_sec = C('er-sec er-bg-lowest', [C('er-wrap', [
+cases_sec = C('er-sec er-bg-surface', [C('er-wrap', [
     C('er-maxw-2xl', [
         P('<span class="er-eyebrow">Verifiable Practice Transformations</span>'),
         H('h2', 'Documented Client Case Studies', 'er-h2'),
@@ -500,7 +500,7 @@ plans = C('er-price__plane', [
          "Request Enterprise Scope", "er-btn er-btn--light er-btn--block"),
 ], extra={"flex_direction": "row", "flex_wrap": "wrap"})
 
-pricing = C('er-sec er-bg-surface', [C('er-wrap', [
+pricing = C('er-sec er-bg-lowest', [C('er-wrap', [
     C('er-center er-maxw-3xl er-mx', [
         P('<span class="er-eyebrow">Transparent &amp; Incentive-Aligned</span>'),
         H('h2', 'We Only Get Paid When You Get Paid', 'er-h2'),

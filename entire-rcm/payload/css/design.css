@@ -939,3 +939,62 @@ body.er-drawer-open { overflow: hidden; }
   .er-body .er-nav__cta, .er-body .er-btn--sm, .er-body .er-menulink { width: auto; }
 }
 
+
+/* ---- Gaps: the design supplies its own rhythm, so Elementor's default
+   container gap (20px) is zeroed and every deliberate gap is re-asserted
+   at a specificity the blanket reset cannot beat. ---- */
+.er-body .e-con { gap: 0; }
+.er-body .er-row { gap: 1rem; }
+.er-body .er-stack { gap: .75rem; }
+.er-body .er-announce__inner { gap: .25rem; }
+.er-body .er-nav__inner { gap: 1rem; }
+.er-body .er-brand { gap: .5rem; }
+.er-body .er-menu { gap: 1.5rem; }
+.er-body .er-nav__actions { gap: 1rem; }
+.er-body .er-nav__phone { gap: .25rem; }
+.er-body .er-drawer { gap: 1.5rem; }
+.er-body .er-drawer__actions { gap: .75rem; }
+.er-body .er-hero__grid { gap: 2.5rem; }
+.er-body .er-hero__badge { gap: .5rem; }
+.er-body .er-hero__cta { gap: .75rem; }
+.er-body .er-stats { gap: 1.5rem; }
+.er-body .er-quickcard__head { gap: .5rem; }
+.er-body .er-result__head { gap: .5rem; }
+.er-body .er-quickcard__trust { gap: .75rem; }
+.er-body .er-quickcard__trust span { gap: .3rem; }
+.er-body .er-certs { gap: clamp(.75rem, .5rem + 1.2vw, 2rem); }
+.er-body .er-cert { gap: .5rem; }
+.er-body .er-versus__tag { gap: .4rem; }
+.er-body .er-plist { gap: 1rem; }
+.er-body .er-plist li { gap: .75rem; }
+.er-body .er-versus__foot { gap: 1rem; }
+.er-body .er-pillar__metric { gap: .4rem; }
+.er-body .er-bento__grid2 { gap: 1rem; }
+.er-body .er-calc__grid { gap: 3.5rem; }
+.er-body .er-calc__checks { gap: .75rem; }
+.er-body .er-calc__checks li { gap: .5rem; }
+.er-body .er-slider__row { gap: 1rem; }
+.er-body .er-security__cards { gap: 1rem; }
+.er-body .er-payers__row { gap: .25rem; }
+.er-body .er-case__meta { gap: .5rem; }
+.er-body .er-case__metrics { gap: 1rem; }
+.er-body .er-case__who { gap: .75rem; }
+.er-body .er-stars { gap: .25rem; }
+.er-body .er-price__feats { gap: .625rem; }
+.er-body .er-price__feats li { gap: .5rem; }
+.er-body .er-cta__grid { gap: 2rem; }
+.er-body .er-form__grid { gap: 1rem; }
+.er-body .er-form__note { gap: 1rem; }
+.er-body .er-form__note span { gap: .3rem; }
+.er-body .er-footer__cta { gap: 1.5rem; }
+.er-body .er-footer__cta form { gap: .5rem; }
+.er-body .er-footer__grid { gap: 1.5rem; }
+.er-body .er-footer__brand { gap: 1rem; }
+.er-body .er-footer__badge { gap: .4rem; }
+.er-body .er-footer__links { gap: .5rem; }
+.er-body .er-footer__bottom { gap: .75rem; }
+.er-body .er-link { gap: .25rem; }
+.er-body .er-chart__legend { gap: 1rem; }
+.er-body .er-chart__legend span { gap: .35rem; }
+.er-body .er-chart__head { gap: .25rem 1rem; }
+.er-body .er-payers__head { gap: .5rem 1rem; }
