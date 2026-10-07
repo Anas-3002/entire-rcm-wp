@@ -60,8 +60,10 @@
 
 /* CF7: the wrapper carries the design's form classes. */
 .er-body .er-cf7form > .elementor-widget-container,
-.er-body .er-cf7form .wpcf7,
-.er-body .er-cf7form .wpcf7 > form { display: contents; }
+.er-body .er-cf7form .wpcf7 { display: contents; }
+/* The <form> itself is NOT collapsed: it is the element that carries the
+   design's form-level classes (flex/grid/space-y), and those depend on it
+   actually generating a box with the right children. */
 .er-body .er-cf7form .wpcf7 br { display: none; }
 .er-body .wpcf7-not-valid-tip { font-size: .75rem; color: #ba1a1a; margin-top: .25rem; }
 .er-body .wpcf7-response-output {

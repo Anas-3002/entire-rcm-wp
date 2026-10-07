@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'ER_RCM_VERSION', '4.6.0' );
+define( 'ER_RCM_VERSION', '4.7.0' );
 define( 'ER_RCM_DIR', __DIR__ . '/entire-rcm' );
 define( 'ER_RCM_URL', plugins_url( 'entire-rcm', __FILE__ ) );
 
@@ -43,6 +43,37 @@ add_action( 'wp_enqueue_scripts', function () {
 		wp_deregister_style( $handle );
 	}
 }, 100 );
+
+/**
+ * Contact Form 7 renders its own <form> element and a .wpcf7 wrapper around the
+ * design's markup. Both are collapsed with display:contents so the design's tree
+ * is restored — which means the design's form-level classes have to be moved onto
+ * CF7's <form>. They cannot stay on a wrapper: child selectors such as
+ * .space-y-4 > * only ever see real DOM children, so a wrapper silently loses
+ * every gap between the fields.
+ */
+add_filter( 'wpcf7_form_class_attr', function ( $class ) {
+	$form = function_exists( 'wpcf7_get_current_contact_form' ) ? wpcf7_get_current_contact_form() : null;
+	if ( ! $form ) {
+		return $class;
+	}
+	$map = array(
+		'quick'  => 'flex flex-col gap-space-sm pt-2',
+		'audit'  => 'space-y-4 max-w-2xl mx-auto',
+		'footer' => 'w-full lg:w-auto shrink-0 flex flex-col sm:flex-row gap-space-sm',
+	);
+	$key = get_post_meta( $form->id(), '_er_rcm_form_key', true );
+	if ( isset( $map[ $key ] ) ) {
+		$class .= ' ' . $map[ $key ];
+	}
+	return $class;
+} );
+
+/**
+ * The form templates are the Stitch design's own markup; CF7's wpautop would
+ * wrap every label + field pair in a <p> the design does not have.
+ */
+add_filter( 'wpcf7_autop_or_not', '__return_false' );
 
 /**
  * Front-end assets: fonts + design system + interactions.
