@@ -197,6 +197,7 @@ function er_rcm_form_definitions() {
 	   supplies the wrapping <form> and the design's classes are applied to that
 	   wrapper through the shortcode widget instead. */
 $quick = <<<'HTML'
+<!-- no autop -->
 [hidden er-source default:"hero"]
 <div>
 <label class="block font-label-md text-label-md text-on-surface mb-1" for="audit-specialty">Clinical Specialty</label>
@@ -242,6 +243,7 @@ $quick = <<<'HTML'
 HTML;
 
 $audit = <<<'HTML'
+<!-- no autop -->
 [hidden er-source default:"audit"]
 <div class="grid grid-cols-1 sm:grid-cols-2 gap-space-sm">
 <div>
@@ -318,6 +320,7 @@ $audit = <<<'HTML'
 HTML;
 
 $footer = <<<'HTML'
+<!-- no autop -->
 [hidden er-source default:"footer"]
 <input type="email" name="institutional-email" id="institutional-email"
 	class="px-space-md py-3 rounded-lg bg-surface-container-lowest text-on-surface placeholder:text-on-surface-variant font-body-sm text-body-sm focus:outline-none w-full sm:w-72"

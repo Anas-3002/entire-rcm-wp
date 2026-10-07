@@ -10,9 +10,39 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'ER_RCM_VERSION', '4.4.0' );
+define( 'ER_RCM_VERSION', '4.5.0' );
 define( 'ER_RCM_DIR', __DIR__ . '/entire-rcm' );
 define( 'ER_RCM_URL', plugins_url( 'entire-rcm', __FILE__ ) );
+
+/**
+ * True on the provisioned landing page (and its Elementor editor preview).
+ */
+function er_rcm_is_landing() {
+	static $is = null;
+	if ( null !== $is ) {
+		return $is;
+	}
+	$page_id = (int) get_option( 'er_rcm_page_id' );
+	$is      = ( $page_id && is_page( $page_id ) ) || ( $page_id && is_front_page() );
+	return $is;
+}
+
+/**
+ * The landing page is a full-page Elementor Canvas carrying the Stitch export's
+ * own reset (Tailwind's preflight). Hello Elementor still enqueues its reset and
+ * theme stylesheets, which restyle raw <button>/<input> elements — a 1px border
+ * on every button, a different input background, and so on. On the landing page
+ * they are dropped so the design's own base is the only base.
+ */
+add_action( 'wp_enqueue_scripts', function () {
+	if ( ! er_rcm_is_landing() ) {
+		return;
+	}
+	foreach ( array( 'hello-elementor', 'hello-elementor-theme-style', 'hello-elementor-header-footer' ) as $handle ) {
+		wp_dequeue_style( $handle );
+		wp_deregister_style( $handle );
+	}
+}, 100 );
 
 /**
  * Front-end assets: fonts + design system + interactions.
