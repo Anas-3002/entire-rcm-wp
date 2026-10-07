@@ -65,6 +65,14 @@
    design's form-level classes (flex/grid/space-y), and those depend on it
    actually generating a box with the right children. */
 .er-body .er-cf7form .wpcf7 br { display: none; }
+
+/* Elementor ships `.elementor img { height: auto; max-width: 100% }` at (0,1,1),
+   which silently outranks the design's single-class sizing utilities (0,1,0) and
+   renders every logo at its intrinsic size. The design only ever sizes an <img>
+   with h-8 / w-auto, so those two are re-asserted on the element itself. Any new
+   sizing utility added to an image needs the same treatment. */
+.er-body .er-section-html img.h-8 { height: 2rem; }
+.er-body .er-section-html img.w-auto { width: auto; }
 .er-body .wpcf7-not-valid-tip { font-size: .75rem; color: #ba1a1a; margin-top: .25rem; }
 .er-body .wpcf7-response-output {
   margin: .5rem 0 0 !important; padding: .75rem 1rem !important; border-radius: .5rem;
