@@ -444,7 +444,7 @@ function er_rcm_install_page() {
 	update_post_meta( $page_id, '_elementor_template_type', 'wp-page' );
 	update_post_meta( $page_id, '_elementor_version', defined( 'ELEMENTOR_VERSION' ) ? ELEMENTOR_VERSION : '3.0.0' );
 	update_post_meta( $page_id, '_elementor_page_settings', array( 'hide_title' => 'yes' ) );
-	update_post_meta( $page_id, '_wp_page_template', 'elementor_header_footer' );
+	update_post_meta( $page_id, '_wp_page_template', 'elementor_canvas' );
 
 	if ( post_type_exists( 'elementor_library' ) ) {
 		// no template transfer needed.

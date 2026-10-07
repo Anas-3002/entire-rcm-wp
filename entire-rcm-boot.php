@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'ER_RCM_VERSION', '4.2.0' );
+define( 'ER_RCM_VERSION', '4.3.0' );
 define( 'ER_RCM_DIR', __DIR__ . '/entire-rcm' );
 define( 'ER_RCM_URL', plugins_url( 'entire-rcm', __FILE__ ) );
 
@@ -51,8 +51,28 @@ add_action( 'wp_body_open', function () {
 	echo '<span id="content" class="er-sr"></span>' . "\n";
 }, 1 );
 
+/**
+ * The Stitch document's own <html> and <body> classes carry the base surface
+ * colour, the Inter body face and the text-selection tint. WordPress owns both
+ * tags, so the design's classes are replayed onto them here — without them the
+ * document falls back to the system font stack and every block re-wraps.
+ */
+add_filter( 'language_attributes', function ( $out ) {
+	return $out . ' class="scroll-smooth"';
+} );
+
 add_filter( 'body_class', function ( $c ) {
 	$c[] = 'er-body';
+	foreach ( array(
+		'bg-background',
+		'text-on-surface',
+		'font-body-md',
+		'antialiased',
+		'selection:bg-secondary-fixed',
+		'selection:text-on-secondary-fixed',
+	) as $design_class ) {
+		$c[] = $design_class;
+	}
 	return $c;
 } );
 
