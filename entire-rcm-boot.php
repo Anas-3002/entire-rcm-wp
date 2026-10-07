@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'ER_RCM_VERSION', '2.1.0' );
+define( 'ER_RCM_VERSION', '3.0.0' );
 define( 'ER_RCM_DIR', __DIR__ . '/entire-rcm' );
 define( 'ER_RCM_URL', plugins_url( 'entire-rcm', __FILE__ ) );
 
@@ -33,7 +33,7 @@ add_action( 'wp_enqueue_scripts', function () {
 		array(),
 		null
 	);
-	wp_enqueue_style( 'er-rcm', ER_RCM_URL . '/payload/css/design.css', array(), ER_RCM_VERSION );
+	wp_enqueue_style( 'er-rcm', ER_RCM_URL . '/payload/css/entire-rcm.css', array(), ER_RCM_VERSION );
 	wp_enqueue_script( 'er-rcm', ER_RCM_URL . '/payload/js/theme.js', array(), ER_RCM_VERSION, true );
 }, 20 );
 

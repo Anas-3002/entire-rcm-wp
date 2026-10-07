@@ -192,68 +192,138 @@ function er_rcm_cf7_messages() {
 }
 
 function er_rcm_form_definitions() {
-	$quick = <<<'HTML'
-<p class="er-label-sm er-field__label">Clinical Specialty</p>
-[select* audit-specialty class:er-select id:audit-specialty "Cardiology Practices" "Orthopedic Surgery & Sports Med" "Family Medicine & Internal Med" "Mental & Behavioral Health" "Ambulatory Surgery Centers (ASC)" "Physical Therapy & Pain Medicine" "Other Multi-Specialty Clinic"]
-<div class="er-field">
-	<label class="er-field__label" for="audit-monthly-volume">Monthly Billing Collections
-		<span id="audit-volume-label">$250,000 / mo</span></label>
-	<input type="range" id="audit-monthly-volume" name="audit-monthly-volume" class="er-range"
-		min="50000" max="1500000" step="50000" value="250000" aria-label="Monthly billing collections">
-	<div class="er-range-row"><span>$50k</span><span>$750k</span><span>$1.5M+</span></div>
+	/* The form markup is the Stitch design's own, so the layout, classes and
+	   ids the design's JavaScript expects are preserved exactly. Contact Form 7
+	   supplies the wrapping <form> and the design's classes are applied to that
+	   wrapper through the shortcode widget instead. */
+$quick = <<<'HTML'
+[hidden er-source default:"hero"]
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-1" for="audit-specialty">Clinical Specialty</label>
+<div class="relative">
+<select class="w-full bg-surface text-on-surface font-body-sm text-body-sm rounded-lg px-3.5 py-2.5 appearance-none focus:outline-none focus:ring-2 focus:ring-secondary/40 shadow-sm cursor-pointer" id="audit-specialty" required="" name="audit-specialty">
+<option value="Cardiology">Cardiology Practices</option>
+<option value="Orthopedics">Orthopedic Surgery &amp; Sports Med</option>
+<option value="Family Medicine">Family Medicine &amp; Internal Med</option>
+<option value="Behavioral Health">Mental &amp; Behavioral Health</option>
+<option value="Ambulatory Surgery">Ambulatory Surgery Centers (ASC)</option>
+<option value="Pain Management">Physical Therapy &amp; Pain Medicine</option>
+<option value="Other">Other Multi-Specialty Clinic</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-2.5 text-on-surface-variant pointer-events-none text-[20px]">expand_more</span>
 </div>
-<div class="er-field">[text* admin-name class:er-input placeholder "Practice Admin / Dr. Name"]</div>
-<div class="er-field">[email* work-email class:er-input placeholder "Work Email"]</div>
-<div class="er-result" id="quick-audit-result-banner">
-	<div class="er-result__head">
-		<span class="er-ico er-ico--md er-ico--sec">verified</span>
-		<span class="er-h4">Estimated Annual Recovery: <span id="quick-result-lift">$48,500</span></span>
-	</div>
-	<p class="er-p-sm" id="quick-result-summary">Based on typical 16% denial leakages in your specialty, Entire RCM recovers an average of 14.2% additional cash within the first 60 days.</p>
-	<p class="er-mt-sm"><a class="er-link" href="#schedule-audit">Reserve Your Audit Slot <span class="er-ico er-ico--sm">arrow_right_alt</span></a></p>
 </div>
-<button type="submit" id="audit-quick-btn" class="er-btn er-btn--secondary er-btn--block">
-	<span class="er-ico er-ico--md">trending_up</span><span>Calculate My Recoverable Revenue</span></button>
-<div class="er-quickcard__trust">
-	<span><span class="er-ico er-ico--sm">verified</span> HIPAA Protected</span>
-	<span><span class="er-ico er-ico--sm">lock</span> 256-Bit SSL</span>
-	<span><span class="er-ico er-ico--sm">schedule</span> 48-Hr Delivery</span>
+<div>
+<div class="flex justify-between items-center mb-1">
+<label class="font-label-md text-label-md text-on-surface" for="audit-monthly-volume">Monthly Billing Collections</label>
+<span class="font-label-md text-label-md text-secondary font-bold" id="audit-volume-display">$250,000 / mo</span>
+</div>
+<input class="w-full h-2 bg-surface-variant rounded-lg appearance-none cursor-pointer accent-secondary" id="audit-monthly-volume" max="1500000" min="50000" oninput="document.getElementById('audit-volume-display').innerText = '$' + Number(this.value).toLocaleString() + ' / mo';" step="25000" type="range" value="250000" name="audit-monthly-volume">
+<div class="flex justify-between text-on-surface-variant font-label-sm text-label-sm pt-1">
+<span>$50k</span>
+<span>$750k</span>
+<span>$1.5M+</span>
+</div>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-1" for="audit-contact-name">Practice Admin / Dr. Name</label>
+<input class="w-full bg-surface text-on-surface font-body-sm text-body-sm rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-secondary/40 shadow-sm" id="audit-contact-name" placeholder="Dr. Sarah Jenkins" required="" type="text" name="audit-contact-name">
+</div>
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-1" for="audit-work-email">Work Email</label>
+<input class="w-full bg-surface text-on-surface font-body-sm text-body-sm rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-secondary/40 shadow-sm" id="audit-work-email" placeholder="sarah@heartclinic.org" required="" type="email" name="audit-work-email">
+</div>
+</div>
+<button class="mt-2 w-full py-3.5 px-4 rounded-lg bg-secondary text-on-secondary font-label-lg text-label-lg hover:bg-primary shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center gap-2" type="submit">
+<span class="material-symbols-outlined text-[20px]">trending_up</span>
+<span>Calculate My Recoverable Revenue</span>
+</button>
+HTML;
+
+$audit = <<<'HTML'
+[hidden er-source default:"audit"]
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-space-sm">
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-1" for="lead-fullname">Full Name &amp; Title</label>
+<input class="w-full bg-surface text-on-surface font-body-sm text-body-sm rounded-lg px-3.5 py-2.5 focus:outline-none focus:ring-2 focus:ring-secondary/50 shadow-sm" id="lead-fullname" placeholder="Dr. Arthur Sterling, MD" required="" type="text" name="lead-fullname">
+</div>
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-1" for="lead-clinicname">Clinic / Practice Name</label>
+<input class="w-full bg-surface text-on-surface font-body-sm text-body-sm rounded-lg px-3.5 py-2.5 focus:outline-none focus:ring-2 focus:ring-secondary/50 shadow-sm" id="lead-clinicname" placeholder="Sterling Cardiovascular Care" required="" type="text" name="lead-clinicname">
+</div>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-space-sm">
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-1" for="lead-email">Corporate / Practice Email</label>
+<input class="w-full bg-surface text-on-surface font-body-sm text-body-sm rounded-lg px-3.5 py-2.5 focus:outline-none focus:ring-2 focus:ring-secondary/50 shadow-sm" id="lead-email" placeholder="director@sterlingcardio.com" required="" type="email" name="lead-email">
+</div>
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-1" for="lead-phone">Direct Phone Number</label>
+<input class="w-full bg-surface text-on-surface font-body-sm text-body-sm rounded-lg px-3.5 py-2.5 focus:outline-none focus:ring-2 focus:ring-secondary/50 shadow-sm" id="lead-phone" placeholder="+1 (555) 234-8901" required="" type="tel" name="lead-phone">
+</div>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-space-sm">
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-1" for="lead-ehr">Current EHR / Billing Software</label>
+<select class="w-full bg-surface text-on-surface font-body-sm text-body-sm rounded-lg px-3.5 py-2.5 focus:outline-none focus:ring-2 focus:ring-secondary/50 shadow-sm cursor-pointer" id="lead-ehr" name="lead-ehr">
+<option value="Epic">Epic Systems</option>
+<option value="athenahealth">athenahealth</option>
+<option value="eClinicalWorks">eClinicalWorks</option>
+<option value="Kareo / Tebra">Kareo / Tebra</option>
+<option value="AdvancedMD">AdvancedMD</option>
+<option value="NextGen">NextGen Healthcare</option>
+<option value="Cerner">Cerner / Oracle Health</option>
+<option value="Other">Other System</option>
+</select>
+</div>
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-1" for="lead-providers">Number of Billing Providers</label>
+<select class="w-full bg-surface text-on-surface font-body-sm text-body-sm rounded-lg px-3.5 py-2.5 focus:outline-none focus:ring-2 focus:ring-secondary/50 shadow-sm cursor-pointer" id="lead-providers" name="lead-providers">
+<option value="1">Solo Provider (1)</option>
+<option value="2-4">2 to 4 Providers</option>
+<option value="5-10">5 to 10 Providers</option>
+<option value="11-25">11 to 25 Providers</option>
+<option value="25+">25+ Providers / ASC / Hospital</option>
+</select>
+</div>
+</div>
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-1" for="lead-challenge">Primary Revenue Cycle Hurdle (Optional)</label>
+<textarea class="w-full bg-surface text-on-surface font-body-sm text-body-sm rounded-lg px-3.5 py-2 focus:outline-none focus:ring-2 focus:ring-secondary/50 shadow-sm" id="lead-challenge" placeholder="E.g., High prior-authorization denial rates with UnitedHealthcare; aging AR over 60 days..." rows="2" name="lead-challenge"></textarea>
+</div>
+<div class="pt-2">
+<button class="w-full py-4 rounded-lg bg-primary text-on-primary font-label-lg text-label-lg shadow-md hover:bg-secondary hover:shadow-xl hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center gap-2" id="lead-submit-button" type="submit">
+<span class="material-symbols-outlined text-[20px]">assignment_turned_in</span>
+<span>Reserve My Practice Revenue Audit</span>
+</button>
+</div>
+<!-- Submission Confirmation Alert Banner -->
+<div class="hidden p-4 rounded-lg bg-secondary-fixed/50 text-primary transition-all" id="booking-confirmation-alert">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary text-[28px]">check_circle</span>
+<div>
+<strong class="font-headline-sm text-headline-sm block">Audit Request Confirmed!</strong>
+<p class="font-body-sm text-body-sm mt-0.5">
+                  Thank you! An Entire RCM Revenue Director will reach out within 2 business hours with your secure file upload portal link.
+                </p>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-center gap-4 text-on-surface-variant font-label-sm text-label-sm pt-2">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[15px] text-tertiary-fixed-dim">lock</span> 100% Confidential</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[15px] text-tertiary-fixed-dim">verified</span> BAA Execution Guaranteed</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[15px] text-tertiary-fixed-dim">block</span> No Sales Spam</span>
 </div>
 HTML;
 
-	$audit = <<<'HTML'
-<div class="er-form__grid">
-	<div>[text* full-name class:er-input placeholder "Full Name & Title"]</div>
-	<div>[text* clinic-name class:er-input placeholder "Clinic / Practice Name"]</div>
-	<div>[email* practice-email class:er-input placeholder "Corporate / Practice Email"]</div>
-	<div>[tel* direct-phone class:er-input placeholder "Direct Phone Number"]</div>
-	<div>
-		<label class="er-field__label er-field__label--dark" for="ehr-system">Current EHR / Billing Software</label>
-		[select* ehr-system id:ehr-system class:er-select "Epic Systems" "athenahealth" "eClinicalWorks" "Kareo / Tebra" "AdvancedMD" "NextGen Healthcare" "Cerner / Oracle Health" "Other System"]
-	</div>
-	<div>
-		<label class="er-field__label er-field__label--dark" for="provider-count">Number of Billing Providers</label>
-		[select* provider-count id:provider-count class:er-select "Solo Provider (1)" "2 to 4 Providers" "5 to 10 Providers" "11 to 25 Providers" "25+ Providers / ASC / Hospital"]
-	</div>
-	<div class="er-form__full">[textarea revenue-hurdle class:er-textarea class:er-textarea--sm placeholder "Primary Revenue Cycle Hurdle (Optional)"]</div>
-</div>
-<button type="submit" id="lead-submit-button" class="er-btn er-btn--primary er-btn--block">
-	<span class="er-ico er-ico--md">assignment_turned_in</span><span>Reserve My Practice Revenue Audit</span></button>
-<div class="er-confirm" id="booking-confirmation-alert">
-	<strong>Audit Request Confirmed!</strong>
-	<p class="er-p-sm">Thank you! An Entire RCM Revenue Director will reach out within 2 business hours with your secure file upload portal link.</p>
-</div>
-<div class="er-form__note">
-	<span><span class="er-ico er-ico--sm">lock</span> 100% Confidential</span>
-	<span><span class="er-ico er-ico--sm">verified</span> BAA Execution Guaranteed</span>
-	<span><span class="er-ico er-ico--sm">block</span> No Sales Spam</span>
-</div>
-HTML;
-
-	$footer = <<<'HTML'
-<input type="email" name="institutional-email" id="institutional-email" class="er-input"
+$footer = <<<'HTML'
+[hidden er-source default:"footer"]
+<input type="email" name="institutional-email" id="institutional-email"
+	class="px-space-md py-3 rounded-lg bg-surface-container-lowest text-on-surface placeholder:text-on-surface-variant font-body-sm text-body-sm focus:outline-none w-full sm:w-72"
 	placeholder="Enter institutional email..." required aria-label="Institutional email">
-<button type="submit" class="er-btn er-btn--secondary"><span>Book Audit</span></button>
+<button type="submit"
+	class="px-space-lg py-3 rounded-lg bg-secondary text-on-secondary font-label-lg text-label-lg hover:bg-surface-container-lowest hover:text-primary transition-all text-center whitespace-nowrap shadow-[0_1px_3px_0_rgba(18,32,86,0.12)]"><span>Book Audit</span></button>
 HTML;
 
 	$stamp = "\n\nSubmitted: [_date] [_time]\nSource page: [_source_url]\n";
@@ -261,17 +331,17 @@ HTML;
 	$body_quick = 'New quick practice-yield estimate request.' . $stamp . "\n"
 		. "Clinical specialty: [audit-specialty]\n"
 		. "Monthly billing collections: [audit-monthly-volume]\n"
-		. "Practice admin / doctor: [admin-name]\n"
-		. "Work email: [work-email]\n";
+		. "Practice admin / doctor: [audit-contact-name]\n"
+		. "Work email: [audit-work-email]\n";
 
 	$body_audit = 'New 30-Day Revenue Cycle Health Audit request.' . $stamp . "\n"
-		. "Full name & title: [full-name]\n"
-		. "Clinic / practice: [clinic-name]\n"
-		. "Email: [practice-email]\n"
-		. "Direct phone: [direct-phone]\n"
-		. "Current EHR / billing software: [ehr-system]\n"
-		. "Number of billing providers: [provider-count]\n"
-		. "Primary revenue cycle hurdle: [revenue-hurdle]\n";
+		. "Full name & title: [lead-fullname]\n"
+		. "Clinic / practice: [lead-clinicname]\n"
+		. "Email: [lead-email]\n"
+		. "Direct phone: [lead-phone]\n"
+		. "Current EHR / billing software: [lead-ehr]\n"
+		. "Number of billing providers: [lead-providers]\n"
+		. "Primary revenue cycle hurdle: [lead-challenge]\n";
 
 	$body_footer = 'New footer audit request.' . $stamp . "\n"
 		. "Institutional email: [institutional-email]\n";
@@ -280,12 +350,12 @@ HTML;
 		'quick'  => array(
 			'title' => 'Instant Practice Yield Estimate',
 			'form'  => $quick,
-			'mail'  => er_rcm_mail( 'Quick yield estimate - [admin-name] ([work-email])', 'Reply-To: [admin-name] <[work-email]>', $body_quick ),
+			'mail'  => er_rcm_mail( 'Quick yield estimate - [audit-contact-name] ([audit-work-email])', 'Reply-To: [audit-contact-name] <[audit-work-email]>', $body_quick ),
 		),
 		'audit'  => array(
 			'title' => '30-Day Revenue Cycle Health Audit',
 			'form'  => $audit,
-			'mail'  => er_rcm_mail( 'Revenue Cycle Audit request - [clinic-name]', 'Reply-To: [full-name] <[practice-email]>', $body_audit ),
+			'mail'  => er_rcm_mail( 'Revenue Cycle Audit request - [lead-clinicname]', 'Reply-To: [lead-fullname] <[lead-email]>', $body_audit ),
 		),
 		'footer' => array(
 			'title' => 'Footer - Book Audit',
