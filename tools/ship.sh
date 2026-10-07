@@ -9,6 +9,7 @@ S="$LOCALAPPDATA/hermes/cache/scratch/entirercm/stage"
 # page.json is produced by the Stitch DOM converter (re-run through the browser);
 # the stylesheet is Tailwind compiled from the Stitch export, bundled with the
 # Elementor reconciliation layers.
+python "$LOCALAPPDATA/hermes/cache/scratch/entirercm/build/mkpage.py"
 bash "$LOCALAPPDATA/hermes/cache/scratch/entirercm/tw/bundle.sh"
 cp "$B/page.json"                             "$S/entire-rcm/payload/elementor/page.json"
 cp "$B/entire-rcm/payload/css/entire-rcm.css" "$S/entire-rcm/payload/css/entire-rcm.css"

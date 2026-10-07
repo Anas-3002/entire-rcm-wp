@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'ER_RCM_VERSION', '4.8.0' );
+define( 'ER_RCM_VERSION', '4.9.0' );
 define( 'ER_RCM_DIR', __DIR__ . '/entire-rcm' );
 define( 'ER_RCM_URL', plugins_url( 'entire-rcm', __FILE__ ) );
 

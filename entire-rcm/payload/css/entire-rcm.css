@@ -73,6 +73,12 @@
    sizing utility added to an image needs the same treatment. */
 .er-body .er-section-html img.h-8 { height: 2rem; }
 .er-body .er-section-html img.w-auto { width: auto; }
+
+/* The header is fixed at 7rem tall. The export's links were placeholders, so it
+   never needed scroll offsets; anchor jumps must now clear the header. */
+.er-body section[id],
+.er-body #quick-audit-card { scroll-margin-top: 7rem; }
+
 .er-body .wpcf7-not-valid-tip { font-size: .75rem; color: #ba1a1a; margin-top: .25rem; }
 .er-body .wpcf7-response-output {
   margin: .5rem 0 0 !important; padding: .75rem 1rem !important; border-radius: .5rem;
