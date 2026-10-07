@@ -14,7 +14,10 @@
 .e-con {
   flex-direction: row; flex-wrap: nowrap; gap: 0;
   --flex-direction: row; --flex-wrap: nowrap; --flex-gap: 0;
-  width: 100%; max-width: none; margin: 0; padding: 0; box-sizing: border-box;
+  width: 100%; max-width: none; box-sizing: border-box;
+  /* padding/margin are deliberately NOT reset here: Elementor applies them from
+     its own --padding-*/--margin-* custom properties, and a same-specificity
+     reset in this sheet would silently cancel every value set in the editor. */
 }
 .e-con > .e-con-inner { flex-direction: row; flex-wrap: nowrap; gap: 0; width: 100%; max-width: none; padding: 0; }
 .elementor-section, .elementor-column, .elementor-widget-wrap { gap: 0; }
@@ -54,10 +57,6 @@
 /* Bare text nodes and standalone icon spans: no wrapper box in the design. */
 .er-plain-text > .elementor-widget-container,
 .er-icon-widget > .elementor-widget-container { display: contents; }
-
-/* The section containers must never clip or constrain the design markup. */
-.er-body .er-section-html, .er-body .er-section-html .elementor-widget-container { max-width: none; }
-.er-body .er-section-html .elementor-widget-container { width: 100%; }
 
 /* CF7: the wrapper carries the design's form classes. */
 .er-body .er-cf7form > .elementor-widget-container,
